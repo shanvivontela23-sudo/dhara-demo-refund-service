@@ -9,7 +9,7 @@ export function calculateRefund(order, returns) {
     const item = order.items.find((candidate) => candidate.sku === returned.sku);
     if (!item) throw new Error(`Item ${returned.sku} is not part of order ${order.id}`);
     if (returned.quantity > item.quantity) throw new Error(`Cannot return more than ${item.quantity} of ${item.sku}`);
-    total += item.unitPrice;
+    total += item.unitPrice * returned.quantity;
   }
   if (isFullReturn(order, returns)) total += order.shippingFee;
   return { orderId: order.id, total };
