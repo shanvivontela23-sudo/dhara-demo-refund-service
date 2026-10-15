@@ -4,6 +4,9 @@
 // - Shipping is refunded only when every unit of every item is returned.
 
 export function calculateRefund(order, returns) {
+  for (const returned of returns) {
+    if (!(returned.quantity >= 1)) throw new Error(`Returned quantity for ${returned.sku} must be at least 1`);
+  }
   let total = 0;
   for (const returned of returns) {
     const item = order.items.find((candidate) => candidate.sku === returned.sku);
